@@ -16,11 +16,6 @@ public class WorkflowController {
 	@Autowired
 	private WorkflowService workflowService;
 
-	@RequestMapping("/")
-	public String hello() {
-		return "Welcome to Spring Boot Application";
-	}
-
 	@RequestMapping("/start")
 	public String start() {
 		return workflowService.start();
