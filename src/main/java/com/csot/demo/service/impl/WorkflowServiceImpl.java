@@ -18,36 +18,39 @@ import com.csot.demo.service.WorkflowService;
 
 @Service
 public class WorkflowServiceImpl implements WorkflowService {
-	
-	@Autowired    
-    private RuntimeService runtimeService;    
-    @Autowired    
-    private TaskService taskService;    
-    @Autowired    
-    private HistoryService historyService;    
-    @Autowired    
-    private RepositoryService repositoryService;    
-    @Autowired    
-    private ProcessEngineConfigurationImpl processEngineConfiguration;   
+
+	@Autowired
+	private RuntimeService runtimeService;
+	@Autowired
+	private TaskService taskService;
+	@Autowired
+	private HistoryService historyService;
+	@Autowired
+	private RepositoryService repositoryService;
+	@Autowired
+	private ProcessEngineConfigurationImpl processEngineConfiguration;
 
 	@Override
 	public String start() {
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("myProcess");
 		return processInstance.getActivityId();
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List<Map> getTasksByAssignee(String assignee) {
-		return taskService.createTaskQuery().taskAssignee(assignee).list().stream()
-				.map(task -> {
-					Map<String, Object> map = new HashMap<>();
-					map.put("id", task.getId());
-					map.put("taskDefinitionKey", task.getTaskDefinitionKey());
-			        map.put("taskName", task.getName());
-			        return map;
-				})
-				.collect(Collectors.toList());
+		return taskService.createTaskQuery().taskAssignee(assignee).list().stream().map(task -> {
+			Map<String, Object> map = new HashMap<>();
+			map.put("id", task.getId());
+			map.put("taskDefinitionKey", task.getTaskDefinitionKey());
+			map.put("taskName", task.getName());
+			return map;
+		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public void completeTask(String taskId) {
+		taskService.complete(taskId);
 	}
 
 }

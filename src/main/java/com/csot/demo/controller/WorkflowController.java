@@ -15,19 +15,25 @@ import com.csot.demo.service.WorkflowService;
 public class WorkflowController {
 	@Autowired
 	private WorkflowService workflowService;
-	
+
 	@RequestMapping("/")
 	public String hello() {
 		return "Welcome to Spring Boot Application";
 	}
-	
+
 	@RequestMapping("/start")
 	public String start() {
 		return workflowService.start();
 	}
-	
+
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/user/{assignee}")
 	public List<Map> getTasks(@PathVariable String assignee) {
 		return workflowService.getTasksByAssignee(assignee);
+	}
+
+	@RequestMapping("/complete/{taskId}")
+	public void completeTask(@PathVariable String taskId) {
+		workflowService.completeTask(taskId);
 	}
 }

@@ -11,4 +11,6 @@ public interface WorkflowService {
 	
 	@SuppressWarnings("rawtypes")
 	List<Map> getTasksByAssignee(String assignee);
+	
+	void completeTask(String taskId);
 }
