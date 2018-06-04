@@ -11,6 +11,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,21 +37,24 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return processInstance.getActivityId();
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public List<Map> getTasksByAssignee(String assignee) {
-		return taskService.createTaskQuery().taskAssignee(assignee).list().stream().map(task -> {
-			Map<String, Object> map = new HashMap<>();
-			map.put("id", task.getId());
-			map.put("taskDefinitionKey", task.getTaskDefinitionKey());
-			map.put("taskName", task.getName());
-			return map;
-		}).collect(Collectors.toList());
+	public List<Map<String, Object>> getTasksByAssignee(String assignee) {
+		return taskService.createTaskQuery().taskAssignee(assignee).list().stream()
+				.map(this::transformTask)
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public void completeTask(String taskId) {
 		taskService.complete(taskId);
+	}
+	
+	private Map<String, Object> transformTask(Task task) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", task.getId());
+		map.put("taskDefinitionKey", task.getTaskDefinitionKey());
+		map.put("taskName", task.getName());
+		return map;
 	}
 
 }

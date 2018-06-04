@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 public interface WorkflowService {
 	String start();
 	
-	@SuppressWarnings("rawtypes")
-	List<Map> getTasksByAssignee(String assignee);
+	List<Map<String, Object>> getTasksByAssignee(String assignee);
 	
 	void completeTask(String taskId);
 }
