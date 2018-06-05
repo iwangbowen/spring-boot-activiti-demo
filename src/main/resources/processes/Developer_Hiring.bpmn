@@ -47,11 +47,11 @@
     <sequenceFlow id="flow16" sourceRef="subprocess1" targetRef="exclusivegateway2"></sequenceFlow>
     <endEvent id="endevent4" name="rejected"></endEvent>
     <sequenceFlow id="flow17" sourceRef="exclusivegateway2" targetRef="endevent4">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${techInterviewOutcome == false || financialNegotiationOutcome == false}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${techInterviewOutcome  || financialNegotiationOutcome}]]></conditionExpression>
     </sequenceFlow>
     <serviceTask id="servicetask3" name="Send welcome email" activiti:expression="${hiringService.sendWelcomeEmail()}"></serviceTask>
     <sequenceFlow id="flow18" sourceRef="exclusivegateway2" targetRef="servicetask3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${techInterviewOutcome == true && financialNegotiationOutcome == true}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${techInterviewOutcome && financialNegotiationOutcome}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="endevent5" name="accepted"></endEvent>
     <sequenceFlow id="flow19" sourceRef="servicetask3" targetRef="endevent5"></sequenceFlow>

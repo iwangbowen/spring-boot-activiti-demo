@@ -55,6 +55,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 		map.put("id", task.getId());
 		map.put("taskDefinitionKey", task.getTaskDefinitionKey());
 		map.put("taskName", task.getName());
+		map.put("createTime", task.getCreateTime());
 		return map;
 	}
 
