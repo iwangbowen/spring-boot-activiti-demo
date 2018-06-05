@@ -14,7 +14,7 @@
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow5" sourceRef="telephoneInterview" targetRef="exclusivegateway1"></sequenceFlow>
     <serviceTask id="servicetask2" name="Send rejection email" activiti:expression="${hiringService.sendRejectionEmail()}"></serviceTask>
-    <sequenceFlow id="flow6" sourceRef="exclusivegateway1" targetRef="servicetask2">
+    <sequenceFlow id="flow6" name="拒绝" sourceRef="exclusivegateway1" targetRef="servicetask2">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${telephoneInterviewOutcome == false}
 ]]></conditionExpression>
     </sequenceFlow>
@@ -131,6 +131,9 @@
         <omgdi:waypoint x="630.0" y="262.0"></omgdi:waypoint>
         <omgdi:waypoint x="630.0" y="217.0"></omgdi:waypoint>
         <omgdi:waypoint x="740.0" y="217.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="620.0" y="201.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
         <omgdi:waypoint x="845.0" y="217.0"></omgdi:waypoint>
