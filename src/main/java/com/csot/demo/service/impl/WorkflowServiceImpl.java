@@ -13,11 +13,12 @@ import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.csot.demo.service.WorkflowService;
 
-@Service
+@Component
 public class WorkflowServiceImpl implements WorkflowService {
 
 	@Autowired
@@ -32,8 +33,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 	private ProcessEngineConfigurationImpl processEngineConfiguration;
 
 	@Override
-	public String start() {
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("myProcess");
+	public String start(String processKey, Map<String, Object> variables) {
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey, variables);
 		return processInstance.getActivityId();
 	}
 
@@ -45,8 +46,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 	}
 
 	@Override
-	public void completeTask(String taskId) {
-		taskService.complete(taskId);
+	public void completeTask(String taskId, Map<String, Object> variables) {
+		taskService.complete(taskId, variables);
 	}
 	
 	private Map<String, Object> transformTask(Task task) {
